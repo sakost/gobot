@@ -13,3 +13,6 @@
 
 # Settings
 *.json
+/.envrc
+/vendor/
+/.idea/
