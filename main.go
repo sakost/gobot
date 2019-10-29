@@ -11,7 +11,6 @@ const (
 
 type EnvMap map[string]string
 
-
 func main() {
 	var (
 		environ = getEnv("SAKOST_BOT_")
@@ -25,6 +24,6 @@ func main() {
 	checkErr(err)
 
 	if govkbot.API.DEBUG {
-		log.Printf("using token: %s", token)
+		log.Printf("using token: %s", token[:5])
 	}
 }
