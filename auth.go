@@ -31,6 +31,8 @@ type jsonConfig struct {
 	Token string `json:"token"`
 }
 
+// get the token from config file(if exists)
+// if not, return "", nil
 func getCacheToken(login string) (token string, err error) {
 	var (
 		f         *os.File
@@ -71,7 +73,9 @@ func getCacheToken(login string) (token string, err error) {
 	return
 }
 
-func setCacheToken(login, token string) (n int, err error) {
+// set the token and login in config file
+// if force, set the token even if the token already set
+func setCacheToken(login, token string, force bool) (n int, err error) {
 	var (
 		f    *os.File
 		data []byte
@@ -112,12 +116,14 @@ func setCacheToken(login, token string) (n int, err error) {
 		}
 	}
 
-	if cacheJson.Token != "" && cacheJson.Login != "" {
+	if cacheJson.Token != "" && cacheJson.Login != "" && cacheJson.Login == login {
 		log.Print("login and token are already in file")
-		return 0, nil
+		if !force {
+			return 0, nil
+		}
 	}
 
-	// if cacheJson.login == "" || cacheJson.token == ""
+	// set data into file
 	data, err = json.Marshal(jsonConfig{
 		Login: login,
 		Token: token,
