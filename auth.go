@@ -81,8 +81,10 @@ func setCacheToken(login, token string) (n int, err error) {
 	if err != nil && !os.IsExist(err) {
 		return
 	} else if os.IsExist(err) {
-		log.Printf("created file %s", configFilename)
+		log.Printf("file %s already exists", configFilename)
 		err = nil
+	} else {
+		log.Printf("created file %s", configFilename)
 	}
 	defer f.Close()
 
