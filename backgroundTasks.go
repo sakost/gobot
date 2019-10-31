@@ -18,7 +18,7 @@ func infOnline() {
 			log.Println("got an error:", err)
 			err = nil
 		}
-		time.Sleep(time.Minute)
+		time.Sleep(5 * time.Minute)
 	}
 	log.Println("\"infOnline\" task exiting..")
 }
