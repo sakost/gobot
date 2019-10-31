@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/nikepan/govkbot"
 	"log"
+	"os"
+	"os/signal"
 )
 
 const (
@@ -10,6 +12,19 @@ const (
 )
 
 type EnvMap map[string]string
+
+var running bool = true
+
+func initSigHandler() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		s := <-c
+		log.Println("got a signal:", s)
+		log.Println("gracefully exiting...")
+		running = false
+	}()
+}
 
 func main() {
 	var (
@@ -24,6 +39,9 @@ func main() {
 	checkErr(err)
 
 	if govkbot.API.DEBUG {
-		log.Printf("using token: %s", token[:5])
+		log.Printf("using token: %s...", token[:5])
 	}
+	govkbot.SetToken(token)
+	initSigHandler()
+	initTasks()
 }
