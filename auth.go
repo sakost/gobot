@@ -219,7 +219,7 @@ func GetToken(login, password, clientSecret string, clientId int) (token string,
 	}
 
 	token = vkResp.Token
-	_, _err := setCacheToken(login, token)
+	_, _err := setCacheToken(login, token, false)
 
 	if _err != nil {
 		log.Printf("error while caching occured: %s\ncontinue without caching token", _err.Error())
