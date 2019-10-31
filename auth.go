@@ -41,7 +41,7 @@ func getCacheToken(login string) (token string, err error) {
 	f, err = os.Open(configFilename)
 	if err != nil {
 		if os.IsNotExist(err) {
-			log.Printf("file doesn't exists %s", configFilename)
+			log.Printf("config file doesn't exists %s", configFilename)
 			return "", nil
 		}
 		return
@@ -58,7 +58,7 @@ func getCacheToken(login string) (token string, err error) {
 		return "", nil
 	}
 
-	log.Print("parsing a file")
+	log.Print("parsing a data")
 	err = json.Unmarshal(data, &cacheJson)
 	if err != nil {
 		return
@@ -168,7 +168,7 @@ func GetToken(login, password, clientSecret string, clientId int) (token string,
 
 	var (
 		client *http.Client
-		req *http.Request
+		req    *http.Request
 	)
 	client = &http.Client{}
 
