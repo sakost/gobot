@@ -16,3 +16,6 @@
 /.envrc
 /vendor/
 /.idea/
+
+# Auth settings file
+auth_settings.json

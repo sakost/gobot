@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 )
 
 const (
@@ -44,4 +45,7 @@ func main() {
 	govkbot.SetToken(token)
 	initSigHandler()
 	initTasks()
+	for running {
+		time.Sleep(time.Minute)
+	}
 }

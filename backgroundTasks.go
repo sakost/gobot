@@ -23,16 +23,25 @@ func infOnline() {
 	log.Println("\"infOnline\" task exiting..")
 }
 
+type ResObj struct {
+	Text string `json:"text"`
+}
+
+type Response struct {
+	Response ResObj `json:"response"`
+}
+
 func randomStatus() {
 	var (
 		status string
 		res    interface{}
+		getRes Response
 		args   = make(map[string]string)
 		err    error
 	)
 	log.Println("running \"randomStatus\" task")
-	err = govkbot.API.CallMethod("status.get", make(map[string]string), res)
-	status = res.(map[string]string)["text"]
+	err = govkbot.API.CallMethod("status.get", make(map[string]string), &getRes)
+	status = getRes.Response.Text
 	for running {
 		args["text"] = status + " | " + time.Now().Format("15:04") + " | автостатус включён"
 		err = govkbot.API.CallMethod("status.set", args, res)
